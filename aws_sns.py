@@ -16,8 +16,8 @@ DATABASE = "sqlite:///Fever-Surveillance.db"  #
 # AWS SNS configuration
 topic_arn = 'arn:aws:sns:ap-southeast-2:975049897672:Fever-Surveillance'
 session = boto3.Session(
-    aws_access_key_id='your_access_key_id',
-    aws_secret_access_key='your_secret_access_key',
+    aws_access_key_id='AKIA6GBMAW3EBBMO3YHZ',
+    aws_secret_access_key='xJET/II3w2xWR0v7vaWX5XDQA287Z4in2ZtWAvxn',
 )
 sns_client = session.client('sns', region_name='ap-southeast-2',)
 
