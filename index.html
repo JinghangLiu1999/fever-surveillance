@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fever Surveillance Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fever Surveillance Data</h1>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Temperature</th>
+                <th>Fever Probability</th>
+                <th>RGB Image ID</th>
+                <th>Thermal Image ID</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:5000/api/users')
+                .then(response => response.json())
+                .then(data => {
+                    const userTable = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+                    data.forEach(user => {
+                        const row = userTable.insertRow();
+                        row.insertCell(0).textContent = user.id;
+                        row.insertCell(1).textContent = user.temperature;
+                        row.insertCell(2).textContent = user.fever_probability;
+                        row.insertCell(3).textContent = user.rgb_image_id;
+                        row.insertCell(4).textContent = user.thermal_image_id;
+                        row.insertCell(5).textContent = new Date(user.date_created).toLocaleString();
+                    });
+                })
+                .catch(error => console.error('Error fetching users:', error));
+        });
+    </script>
+</body>
+</html>
