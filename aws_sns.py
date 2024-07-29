@@ -6,12 +6,12 @@ import boto3
 from flask_cors import CORS  # Import CORS
 import logging
 
-# Set up basic logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 PORT = 5000
-DATABASE = "sqlite:///Fever-Surveillance.db"  # Ensure the correct database file name
+DATABASE = "sqlite:///Fever-Surveillance.db"  #
 
 # AWS SNS configuration
 topic_arn = 'arn:aws:sns:ap-southeast-2:975049897672:Fever-Surveillance'
@@ -22,7 +22,7 @@ session = boto3.Session(
 sns_client = session.client('sns', region_name='ap-southeast-2',)
 
 app = Flask(__name__, static_folder='static')
-CORS(app)  # Enable CORS for the app
+CORS(app)  
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -81,6 +81,6 @@ def get_users():
 if __name__ == "__main__":
     with app.app_context():
         logger.info("Creating database tables...")
-        db.create_all()  # Create database tables if they don't exist
+        db.create_all()  
         logger.info("Database tables created.")
     app.run(port=PORT, debug=True)
