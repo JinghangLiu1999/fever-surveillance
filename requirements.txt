@@ -1,0 +1,7 @@
+Flask==2.0.1
+Werkzeug==2.0.3
+Flask-Cors==3.0.10
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.25
+boto3==1.18.65
+requests==2.25.1
