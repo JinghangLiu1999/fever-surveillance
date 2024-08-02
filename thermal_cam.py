@@ -109,7 +109,6 @@ class Thermal_cam():
       raise Exception("no data received from thermal camera")
     data = cv2.resize(data[:,:], (640, 480))
     data = cv2.rotate(data, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    print("1")
     # minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(data)
     # img = raw_to_8bit(data)
     # display_temperature(img, minVal, minLoc, (255, 0, 0))

@@ -67,6 +67,7 @@ def after_insert_listener(mapper, connection, target):
 # Flask routes
 @app.route("/", methods=["GET"])
 def home():
+    print(queue.get())
     return "Welcome to the Fever Surveillance API!"
 
 @app.route("/api/users", methods=['POST'])
@@ -102,8 +103,9 @@ def run_flask_app():
     app.run(port=5000, debug=False)  
 
 if __name__ == "__main__":
-
     # Run Flask app in a separate thread
     flask_thread = threading.Thread(target=run_flask_app)
-    camera_process = threading.Thread(video_feed.run, (queue,))
+    # camera_thread = threading.Thread(target=video_feed.run, args=(queue,))
     flask_thread.start()
+    # camera_thread.start()
+
