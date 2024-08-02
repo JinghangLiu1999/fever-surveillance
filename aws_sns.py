@@ -5,6 +5,10 @@ from datetime import datetime
 import boto3
 from flask_cors import CORS
 import logging
+from multiprocessing import Process, Queue
+from camera import MergeCamera
+import threading
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -25,6 +29,11 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
+video_feed = MergeCamera()
+queue = Queue()
+
 
 # User model definition
 class User(db.Model):
@@ -86,3 +95,15 @@ def create_app():
         db.create_all()
         logger.info("Database tables created.")
     return app
+
+
+def run_flask_app():
+    app = create_app()
+    app.run(port=5000, debug=False)  
+
+if __name__ == "__main__":
+
+    # Run Flask app in a separate thread
+    flask_thread = threading.Thread(target=run_flask_app)
+    camera_process = threading.Thread(video_feed.run, (queue,))
+    flask_thread.start()
