@@ -90,6 +90,7 @@ def get_users():
     users_list = [{'id': user.id, 'temperature': user.temperature, 'fever_probability': user.fever_probability, 'rgb_image_id': user.rgb_image_id, 'thermal_image_id': user.thermal_image_id, 'date_created': user.date_created} for user in users]
     return jsonify(users_list)
 
+
 def create_app():
     with app.app_context():
         logger.info("Creating database tables...")
@@ -105,7 +106,7 @@ def run_flask_app():
 if __name__ == "__main__":
     # Run Flask app in a separate thread
     flask_thread = threading.Thread(target=run_flask_app)
-    # camera_thread = threading.Thread(target=video_feed.run, args=(queue,))
+    camera_thread = threading.Thread(target=video_feed.run, args=(queue,))
     flask_thread.start()
-    # camera_thread.start()
+    camera_thread.start()
 
