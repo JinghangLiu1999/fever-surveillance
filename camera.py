@@ -68,6 +68,7 @@ class MergeCamera():
                         print(point_x, point_y) 
                         continue 
                     degree = ktoc(thermal_frame[point_x][point_y]) 
+                    print("1", degree)
                     temp_reading_position.append((point_x, point_y, degree)) 
 
                 # using original thermal_frame_copy to draw description 
@@ -79,8 +80,9 @@ class MergeCamera():
                     cv2.circle(thermal_frame_copy, (point_x, point_y), radius=5, color=(0,0,255), thickness= - 1) 
                     cv2.putText(thermal_frame_copy,"{0:.1f} degC".format(degree), (point_x, point_y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2) 
                     cv2.putText(rgb_frame,"{0:.1f} degC".format(degree), (point_x, point_y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2) 
+                    print(degree)
 
-                    if degree >= MergeCamera.FEVER_THRESHOLD: 
+                    if degree >= MergeCamera.FEVER_THRESHOLD and degree <= 75:
                         detected_merged_frame = self.merge_function(thermal_frame_copy, rgb_frame) 
                         _, buffer = cv2.imencode('.jpg', detected_merged_frame) 
                         image_data = base64.b64encode(buffer).decode('utf-8') 
